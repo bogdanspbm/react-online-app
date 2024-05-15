@@ -19,6 +19,17 @@ dependencies {
     // Spring
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework:spring-tx")
+    implementation("org.springframework:spring-messaging")
+    implementation("org.springframework:spring-websocket")
+
+    // JSON
+    implementation("org.json:json:20240303")
+
+
+    // JWT
+    implementation("io.jsonwebtoken:jjwt-api:0.11.2")
+    implementation("io.jsonwebtoken:jjwt-impl:0.11.2")
+    implementation("io.jsonwebtoken:jjwt-jackson:0.11.2")
 
 
     // Java

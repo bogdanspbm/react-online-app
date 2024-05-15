@@ -1,0 +1,95 @@
+.app {
+  display: flex;
+  height: 100vh;
+}
+
+.main-content {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+}
+
+.canvas {
+  flex: 3;
+  border: 1px solid #000;
+}
+
+.chat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #000;
+}
+
+.chat-window {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.sidebar {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid #000;
+}
+
+.player-list {
+  flex: 2;
+  border-bottom: 1px solid #000;
+}
+
+.controls {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.arrow-buttons {
+  display: flex;
+  flex-direction: column;
+}
+
+.arrow-buttons div {
+  display: flex;
+  justify-content: space-between;
+}
+
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.timer {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 20px;
+  background-color: #e0e0e0;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progress {
+  height: 100%;
+  background-color: #76c7c0;
+  transition: width 1s linear;
+}
+
+.arrow-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.arrow-buttons div {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}

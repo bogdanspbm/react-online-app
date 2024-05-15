@@ -38,4 +38,9 @@ public class UserController {
     public boolean deleteUserById(@PathVariable int id) {
         return userRepository.deleteByID(id);
     }
+
+    @PostMapping("/authenticate")
+    public UserDTO authenticate(@RequestBody UserDTO userDTO) {
+        return userRepository.authenticate(userDTO.getUsername(), userDTO.getPassword());
+    }
 }

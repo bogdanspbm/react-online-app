@@ -4,7 +4,6 @@ import com.emkn.backend.datastore.DataStore;
 import com.emkn.backend.datastore.SQLDataStore;
 import com.emkn.backend.model.UserDTO;
 
-import javax.xml.transform.Result;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -101,6 +100,27 @@ public class SQLUserRepository implements UserRepository {
         return false;
     }
 
+    @Override
+    public UserDTO authenticate(String username, String password) {
+        try {
+            String query = "SELECT * FROM users WHERE username = ? AND password = ?";
+            PreparedStatement statement = dataStore.getConnection().prepareStatement(query);
+            statement.setString(1, username);
+            statement.setString(2, password);
+            ResultSet resultSet = statement.executeQuery();
+            List<UserDTO> output = parseResultSet(resultSet);
+            resultSet.close();
+            statement.close();
+            if (!output.isEmpty()) {
+                return output.get(0);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     private List<UserDTO> parseResultSet(ResultSet resultSet) {
         List<UserDTO> output = new ArrayList<>();
         try {
@@ -108,6 +128,7 @@ public class SQLUserRepository implements UserRepository {
                 UserDTO userDTO = new UserDTO();
                 userDTO.setId(resultSet.getInt("id"));
                 userDTO.setUsername(resultSet.getString("username"));
+                userDTO.setPassword(resultSet.getString("password")); // Ensure password is included
                 output.add(userDTO);
             }
         } catch (Exception e) {
