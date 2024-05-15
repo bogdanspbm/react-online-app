@@ -1,71 +1,154 @@
+/* Основные стили приложения */
 .app {
   display: flex;
-  height: 100vh;
+  padding: 20px;
+  background-color: #f0f2f5;
+  font-family: Arial, sans-serif;
+  color: #333;
 }
 
+/* Основная часть и боковая панель */
+.main-content, .sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Основная часть */
 .main-content {
   flex: 3;
-  display: flex;
-  flex-direction: column;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.canvas {
-  flex: 3;
-  border: 1px solid #000;
-}
-
-.chat {
+/* Боковая панель */
+.sidebar {
   flex: 1;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Стили для чата */
+.chat {
   display: flex;
   flex-direction: column;
-  border: 1px solid #000;
+  gap: 10px;
 }
 
 .chat-window {
   flex: 1;
   overflow-y: auto;
+  padding: 10px;
+  background-color: #f0f2f5;
+  border-radius: 8px;
 }
 
-.sidebar {
-  flex: 1;
+.chat-message {
+  margin-bottom: 10px;
+}
+
+.chat-input {
   display: flex;
-  flex-direction: column;
-  border-left: 1px solid #000;
+  gap: 10px;
 }
 
+.chat-input input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #d9d9d9;
+  border-radius: 8px;
+}
+
+.chat-input button {
+  padding: 10px;
+  background-color: #1890ff;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.chat-input button:hover {
+  background-color: #40a9ff;
+}
+
+.chat-input button:disabled {
+  background-color: #d9d9d9;
+  cursor: not-allowed;
+}
+
+/* Стили для списка пользователей */
 .player-list {
-  flex: 2;
-  border-bottom: 1px solid #000;
-}
-
-.controls {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.arrow-buttons {
   display: flex;
   flex-direction: column;
+  gap: 10px;
 }
 
-.arrow-buttons div {
+.player-list h3 {
+  margin: 0;
+}
+
+.player-list ul {
+  list-style: none;
+  padding: 0;
+}
+
+.player-list li {
+  padding: 10px;
+  background-color: #f0f2f5;
+  border-radius: 8px;
+}
+
+.login-form {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 10px;
 }
 
+.login-form input {
+  padding: 10px;
+  border: 1px solid #d9d9d9;
+  border-radius: 8px;
+}
 
+.login-form button {
+  padding: 10px;
+  background-color: #1890ff;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.login-form button:hover {
+  background-color: #40a9ff;
+}
+
+.login-form .error {
+  color: red;
+}
+
+.logged-in {
+  padding: 10px;
+  background-color: #e6fffb;
+  border-radius: 8px;
+}
+
+/* Стили для контролов */
 .controls {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  gap: 20px;
 }
 
 .timer {
-  width: 100%;
   text-align: center;
-  margin-bottom: 10px;
 }
 
 .progress-bar {
@@ -78,7 +161,7 @@
 
 .progress {
   height: 100%;
-  background-color: #76c7c0;
+  background-color: #1890ff;
   transition: width 1s linear;
 }
 
@@ -86,10 +169,35 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 10px;
 }
 
 .arrow-buttons div {
   display: flex;
   justify-content: space-between;
   width: 100%;
+}
+
+button {
+  padding: 10px;
+  background-color: #1890ff;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #40a9ff;
+}
+
+button:disabled {
+  background-color: #d9d9d9;
+  cursor: not-allowed;
+}
+
+/* Закругленные края для канваса */
+canvas {
+  border-radius: 8px;
 }
