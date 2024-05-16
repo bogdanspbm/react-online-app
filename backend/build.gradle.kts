@@ -43,7 +43,8 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
     // SQLite
-    implementation("org.xerial:sqlite-jdbc:3.45.3.0")
+//    implementation("org.xerial:sqlite-jdbc:3.45.3.0")
+    implementation("org.postgresql:postgresql:42.6.0")
 }
 
 tasks.withType<Test> {

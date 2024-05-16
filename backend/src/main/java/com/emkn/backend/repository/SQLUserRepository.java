@@ -15,7 +15,8 @@ public class SQLUserRepository implements UserRepository {
     private DataStore dataStore;
 
     public SQLUserRepository() {
-        dataStore = SQLDataStore.createDataStore("jdbc:sqlite:database.sqlite");
+//        dataStore = SQLDataStore.createDataStore("jdbc:sqlite:database.sqlite");
+        dataStore = SQLDataStore.createDataStore("jdbc:postgresql://localhost:5432/RPG2d");
     }
 
     public SQLUserRepository(SQLDataStore dataStore) {
@@ -25,7 +26,7 @@ public class SQLUserRepository implements UserRepository {
     @Override
     public List<UserDTO> getAll() {
         try {
-            String query = "SELECT * FROM users";
+            String query = "SELECT * FROM \"Player\"";
             Statement statement = dataStore.getConnection().createStatement();
             ResultSet resultSet = statement.executeQuery(query);
             List<UserDTO> output = parseResultSet(resultSet);
@@ -42,7 +43,7 @@ public class SQLUserRepository implements UserRepository {
     @Override
     public UserDTO getByID(int id) {
         try {
-            String query = "SELECT * FROM users WHERE id = ?";
+            String query = "SELECT * FROM \"Player\" WHERE id = ?";
             PreparedStatement statement = dataStore.getConnection().prepareStatement(query);
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
@@ -62,10 +63,12 @@ public class SQLUserRepository implements UserRepository {
     @Override
     public int addUser(UserDTO userDTO) {
         try {
-            String query = "INSERT INTO users (username, password) VALUES (?,?)";
+            String query = "INSERT INTO \"Player\" (id, nickname, email, password) VALUES (?,?,?,?)";
             PreparedStatement statement = dataStore.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            statement.setString(1, userDTO.getUsername());
-            statement.setString(2, userDTO.getPassword());
+            statement.setInt(1, userDTO.getId());
+            statement.setString(2, userDTO.getNickname());
+            statement.setString(3, userDTO.getEmail());
+            statement.setString(4, userDTO.getPassword());
             int affectedRows = statement.executeUpdate();
 
             if (affectedRows > 0) {
@@ -88,7 +91,7 @@ public class SQLUserRepository implements UserRepository {
     @Override
     public boolean deleteByID(int id) {
         try {
-            String query = "DELETE FROM users WHERE id = ?";
+            String query = "DELETE FROM \"Player\" WHERE id = ?";
             PreparedStatement statement = dataStore.getConnection().prepareStatement(query);
             statement.setInt(1, id);
             int affectedRows = statement.executeUpdate();
@@ -103,7 +106,7 @@ public class SQLUserRepository implements UserRepository {
     @Override
     public UserDTO authenticate(String username, String password) {
         try {
-            String query = "SELECT * FROM users WHERE username = ? AND password = ?";
+            String query = "SELECT * FROM \"Player\" WHERE nickname = ? AND password = ?";
             PreparedStatement statement = dataStore.getConnection().prepareStatement(query);
             statement.setString(1, username);
             statement.setString(2, password);
@@ -127,7 +130,8 @@ public class SQLUserRepository implements UserRepository {
             while (resultSet.next()) {
                 UserDTO userDTO = new UserDTO();
                 userDTO.setId(resultSet.getInt("id"));
-                userDTO.setUsername(resultSet.getString("username"));
+                userDTO.setNickname(resultSet.getString("nickname"));
+                userDTO.setEmail(resultSet.getString("email"));
                 userDTO.setPassword(resultSet.getString("password")); // Ensure password is included
                 output.add(userDTO);
             }

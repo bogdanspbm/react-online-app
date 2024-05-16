@@ -5,7 +5,7 @@ import SockJS from 'sockjs-client';
 
 const PlayerList = ({ setLoggedInUser }) => {
     const [players, setPlayers] = useState([]);
-    const [username, setUsername] = useState('');
+    const [nickname, setNickname] = useState('');
     const [password, setPassword] = useState('');
     const [loggedInUser, setLocalLoggedInUser] = useState(null);
     const [error, setError] = useState('');
@@ -22,7 +22,7 @@ const PlayerList = ({ setLoggedInUser }) => {
                 console.log('Connected to WebSocket server');
                 stompClient.subscribe('/topic/onlineUsers', (message) => {
                     const onlineUsers = JSON.parse(message.body);
-                    setPlayers(onlineUsers.map(user => user.username));
+                    setPlayers(onlineUsers.map(user => user.nickname));
                 });
             },
         });
@@ -38,7 +38,7 @@ const PlayerList = ({ setLoggedInUser }) => {
     useEffect(() => {
         if (loggedInUser && client) {
             const interval = setInterval(() => {
-                client.publish({ destination: '/app/ping', body: JSON.stringify({ username: loggedInUser }) });
+                client.publish({ destination: '/app/ping', body: JSON.stringify({ nickname: loggedInUser }) });
             }, 10000);
 
             return () => clearInterval(interval);
@@ -48,14 +48,14 @@ const PlayerList = ({ setLoggedInUser }) => {
     const handleLogin = async () => {
         try {
             const response = await axios.post('/api/users/authenticate', {
-                username,
+                nickname,
                 password,
             }, { withCredentials: true });
             if (response.data) {
-                setLocalLoggedInUser(response.data.username);
-                setLoggedInUser(response.data.username);
-                if (!players.includes(response.data.username)) {
-                    setPlayers([...players, response.data.username]);
+                setLocalLoggedInUser(response.data.nickname);
+                setLoggedInUser(response.data.nickname);
+                if (!players.includes(response.data.nickname)) {
+                    setPlayers([...players, response.data.nickname]);
                 }
                 setError('');
             } else {
@@ -70,13 +70,13 @@ const PlayerList = ({ setLoggedInUser }) => {
     const handleRegister = async () => {
         try {
             const response = await axios.post('/api/users', {
-                username,
+                nickname,
                 password,
             }, { withCredentials: true });
             if (response.data) {
-                setLocalLoggedInUser(username);
-                setLoggedInUser(username);
-                setPlayers([...players, username]);
+                setLocalLoggedInUser(nickname);
+                setLoggedInUser(nickname);
+                setPlayers([...players, nickname]);
                 setError('');
             }
         } catch (error) {
@@ -101,9 +101,9 @@ const PlayerList = ({ setLoggedInUser }) => {
                 <div className="login-form">
                     <input
                         type="text"
-                        placeholder="Username"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
+                        placeholder="Nickname"
+                        value={nickname}
+                        onChange={(e) => setNickname(e.target.value)}
                     />
                     <input
                         type="password"

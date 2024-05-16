@@ -2,6 +2,7 @@ package com.emkn.backend.datastore;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.Properties;
 
 public abstract class DataStore {
 
@@ -13,7 +14,10 @@ public abstract class DataStore {
 
     public void createConnection(String url) {
         try {
-            connection = DriverManager.getConnection(url);
+            Properties props = new Properties();
+            props.setProperty("user", "postgres");
+            props.setProperty("password", "1234");
+            connection = DriverManager.getConnection(url, props);
         } catch (Exception e) {
             e.printStackTrace();
         }

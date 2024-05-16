@@ -59,7 +59,7 @@ public class WebSocketController {
     @MessageMapping("/ping")
     @SendTo("/topic/onlineUsers")
     public List<UserDTO> ping(UserDTO user) {
-        boolean userExists = onlineUsers.stream().anyMatch(u -> u.getUsername().equals(user.getUsername()));
+        boolean userExists = onlineUsers.stream().anyMatch(u -> u.getNickname().equals(user.getNickname()));
 
         if (!userExists) {
             onlineUsers.add(user);
@@ -71,7 +71,7 @@ public class WebSocketController {
     @MessageMapping("/disconnect")
     @SendTo("/topic/onlineUsers")
     public List<UserDTO> disconnect(UserDTO user) {
-        onlineUsers.removeIf(u -> u.getUsername().equals(user.getUsername()));
+        onlineUsers.removeIf(u -> u.getNickname().equals(user.getNickname()));
         return onlineUsers;
     }
 
