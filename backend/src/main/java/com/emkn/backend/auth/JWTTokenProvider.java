@@ -20,7 +20,7 @@ public class JWTTokenProvider {
         Date expiryDate = new Date(now.getTime() + EXPIRATION_TIME);
 
         JSONObject json = new JSONObject();
-        json.put("username", userDTO.getUsername());
+        json.put("username", userDTO.getNickname());
         json.put("id", userDTO.getId());
 
 

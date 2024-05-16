@@ -41,6 +41,6 @@ public class UserController {
 
     @PostMapping("/authenticate")
     public UserDTO authenticate(@RequestBody UserDTO userDTO) {
-        return userRepository.authenticate(userDTO.getUsername(), userDTO.getPassword());
+        return userRepository.authenticate(userDTO.getNickname(), userDTO.getPassword());
     }
 }

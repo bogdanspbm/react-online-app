@@ -2,7 +2,8 @@ package com.emkn.backend.model;
 
 public class UserDTO {
     private int id;
-    private String username;
+    private String nickname;
+    private String email;
     private String password;
 
     public int getId() {
@@ -13,12 +14,20 @@ public class UserDTO {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getNickname() {
+        return nickname;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setNickname(String username) {
+        this.nickname = username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
