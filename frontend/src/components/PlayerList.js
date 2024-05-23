@@ -12,10 +12,11 @@ const PlayerList = ({ setLoggedInUser }) => {
     const [client, setClient] = useState(null);
 
     useEffect(() => {
-        const socket = new SockJS('http://localhost:8080/ws');
+        // const socket = new SockJS('http://localhost:8080/ws');
+        const socket = new SockJS('https://bba8mn43mvel1jncd95g.containers.yandexcloud.net/ws');
         const stompClient = new Client({
             webSocketFactory: () => socket,
-            reconnectDelay: 5000,
+            reconnectDelay: 15000,
             heartbeatIncoming: 4000,
             heartbeatOutgoing: 4000,
             onConnect: () => {
@@ -47,7 +48,7 @@ const PlayerList = ({ setLoggedInUser }) => {
 
     const handleLogin = async () => {
         try {
-            const response = await axios.post('/api/users/authenticate', {
+            const response = await axios.post('https://bba8mn43mvel1jncd95g.containers.yandexcloud.net/api/users/authenticate', {
                 nickname,
                 password,
             }, { withCredentials: true });

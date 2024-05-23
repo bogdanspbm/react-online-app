@@ -1,13 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Client } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
+import grass from '../assets/grass.png'
+import bush from '../assets/bush.png'
+import player_ from '../assets/player.png'
+import water from '../assets/water.png'
+import lava from '../assets/lava.jpg'
 
 const TILE_SIZE = 32; // размер клетки в пикселях
 const COLORS = {
-    '*': 'gray',    // стены
-    '_': 'white',   // пол
-    'L': 'orange',  // лава
-    'W': 'blue',    // вода
+    '*': bush,    // стены
+    '_': grass,   // пол
+    'L': lava,  // лава
+    'W': water,    // вода
     'P': 'green'    // игрок
 };
 
@@ -17,9 +22,10 @@ const Canvas = () => {
 
     useEffect(() => {
         const socket = new SockJS('http://localhost:8080/ws');
+        // const socket = new SockJS('https://bba8mn43mvel1jncd95g.containers.yandexcloud.net/ws');
         const stompClient = new Client({
             webSocketFactory: () => socket,
-            reconnectDelay: 5000,
+            reconnectDelay: 15000,
             heartbeatIncoming: 4000,
             heartbeatOutgoing: 4000,
             onConnect: () => {
@@ -85,6 +91,12 @@ const Canvas = () => {
                     row.forEach((tile, x) => {
                         ctx.fillStyle = COLORS[tile] || 'gray';
                         ctx.fillRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+
+                        let img = new Image()
+                        img.src = COLORS[tile];
+                        img.onload = function(){
+                            ctx.drawImage(img, x * TILE_SIZE, y * TILE_SIZE);
+                        }
                     });
                 } else {
                     console.error(`Invalid row format at index ${y}:`, row);
@@ -93,11 +105,16 @@ const Canvas = () => {
 
             // Отрисовка игрока
             const player = gameState.player;
-            ctx.fillStyle = COLORS['P'];
-            ctx.fillRect(player.x * TILE_SIZE, player.y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+            let player_img = new Image();
+            player_img.src = player_;
+            // ctx.fillStyle = COLORS['P'];
+            // ctx.fillRect(player.x * TILE_SIZE, player.y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+            player_img.onload = function(){
+                ctx.drawImage(player_img, player.x * TILE_SIZE, player.y * TILE_SIZE);
+            }
 
             // Отрисовка здоровья игрока
-            ctx.fillStyle = 'black';
+            ctx.fillStyle = 'white';
             ctx.font = '16px Arial';
             ctx.fillText(`Health: ${player.health}`, 10, canvas.height - 10);
         } else {
@@ -107,7 +124,7 @@ const Canvas = () => {
 
     return (
         <div>
-            <canvas ref={canvasRef} width={320} height={320} />
+            <canvas ref={canvasRef} width={360} height={360} />
         </div>
     );
 };
